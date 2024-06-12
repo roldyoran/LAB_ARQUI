@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.planta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px;
+}
+
+.habitacion {
+  border: 1px solid #ccc;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.habitacion p {
+  margin: 10px 0 0 0;
+}
+
+.foco {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+}
+
+.encendido {
+  background-color: yellow;
+}
+
+.apagado {
+  background-color: gray;
+}
