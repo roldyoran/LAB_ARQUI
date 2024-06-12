@@ -65,10 +65,10 @@ function App() {
       <h1>Control de Luces</h1>
       <div className="planta">
         {habitaciones.map(habitacion => (
-          <div key={habitacion.id} className="habitacion">
+          <div key={habitacion.id} className="habitacion" 
+          onClick={() => toggleLuz(habitacion.id)}>
             <div 
               className={`foco ${luces[habitacion.id] ? 'encendido' : 'apagado'}`}
-              onClick={() => toggleLuz(habitacion.id)}
             ></div>
             <p>{habitacion.nombre}</p>
           </div>
