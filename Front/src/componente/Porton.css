@@ -4,6 +4,7 @@
   border: none;
   cursor: pointer;
   position: absolute;
+  border-radius: 10px;
   top: 10px;  /* Espacio desde la parte superior */
   left: 10px;  /* Espacio desde la parte izquierda */
 }

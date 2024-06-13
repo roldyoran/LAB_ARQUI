@@ -1,0 +1,21 @@
+.numero-container {
+  position: absolute; /* Posición absoluta para el contenedor */
+  right: 4rem;
+  top: 120px;
+  text-align: center; /* Alineación central de los textos */
+}
+
+.displayy {
+  font-size: 45px; /* Tamaño grande del número */
+  color: #f3f3f3; /* Color verde similar a un display electrónico */
+  font-family: 'Digital-7', sans-serif; /* Fuente para el display electrónico */
+}
+
+.displayy h1 {
+  margin: 0; /* Quitar margen para evitar desplazamiento */
+}
+
+.displayy p {
+  font-size: 20px;
+  margin: 0; /* Quitar margen para evitar desplazamiento */
+}

@@ -1,0 +1,42 @@
+.banda-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para mejor visibilidad */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-banda {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .button-banda:hover {
+    transform: scale(1.05);
+  }
+  
+  .button-banda.deactive {
+    background-color: #2ecc71; /* Verde cuando la banda está apagada */
+  }
+  
+  .button-banda.active {
+    background-color: #e74c3c; /* Rojo cuando la banda está activa */
+  }
+  
+  .banda-status {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #333;
+  }
+  

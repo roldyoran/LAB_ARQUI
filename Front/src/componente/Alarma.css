@@ -1,0 +1,23 @@
+.alarma-container {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  z-index: 999; /* Asegura que esté por encima de otros elementos */
+}
+
+.alarma-label {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #fff;
+  font-weight: 600;
+}
+
+.alarma-on {
+  background-color: #8d2014; /* Rojo cuando está encendido */
+}
+
+.alarma-off {
+  background-color: #08632e; /* Verde cuando está apagado */
+}
