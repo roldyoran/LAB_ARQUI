@@ -1,11 +1,11 @@
 # LIBRERIAS
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import RPi.GPIO as GPIO
 import threading
 import time
 
 # MODULOS
+import RPi.GPIO as GPIO
 import gpio_setup as led
 
 
@@ -48,13 +48,11 @@ def get_luces_state():
     return jsonify(estado_luces)
 
 
-@app.route('/apagar_puertos', methods=['POST'])
-def apagar_luces():
+@app.route('/apagar_pines', methods=['POST'])
+def apagar_pines():
     # Aqui se apagan los puertos
-    puertos_apagados = {
-        'puertos_apagados': False,
-    }
-    return jsonify(puertos_apagados)
+    led.apagar_todo()
+    return jsonify({"message": "Pines apagados con éxito"})
 
 
 """LUCES LEDS HABITACIONES"""
@@ -94,7 +92,7 @@ def monitor_fotoresistencia():
         time.sleep(1)  # Ajusta el tiempo de espera según sea necesario
 
 # Iniciar el hilo de la fotoresistencia
-# threading.Thread(target=monitor_fotoresistencia, daemon=True).start()
+threading.Thread(target=monitor_fotoresistencia, daemon=True).start()
 
 
 # INICIANDO EL PROGRAMA
