@@ -1,5 +1,19 @@
+# LIBRERIAS
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import RPi.GPIO as GPIO
+import threading
+import time
+
+# MODULOS
+import gpio_setup as led
+
+
+# Importar el módulo simulado en lugar del real
+# from unittest.mock import MagicMock
+# import mock_gpio_setup as led
+# GPIO = MagicMock()
+
 
 app = Flask(__name__)
 CORS(app)
@@ -16,30 +30,40 @@ estado_luces = {
     'exterior': False
 }
 
+# Diccionario de código binario para las luces
 codigo_binario_luces = {
-    'recepcion':        [0,0,0],
-    'conferencias':     [0,0,1],
-    'trabajo':          [0,1,0],
-    'administrativa':   [0,1,1],
-    'carga_descarga':   [1,0,0],
-    'cafeteria':        [1,0,1],
-    'bano':             [1,1,0],
-    'exterior':         [1,1,1]
+    'recepcion':        [ GPIO.LOW,  GPIO.LOW,  GPIO.LOW  ],
+    'conferencias':     [ GPIO.LOW,  GPIO.LOW,  GPIO.HIGH ],
+    'trabajo':          [ GPIO.LOW,  GPIO.HIGH, GPIO.LOW  ],
+    'administrativa':   [ GPIO.LOW,  GPIO.HIGH, GPIO.HIGH ],
+    'carga_descarga':   [ GPIO.HIGH, GPIO.LOW,  GPIO.LOW  ],
+    'cafeteria':        [ GPIO.HIGH, GPIO.LOW,  GPIO.HIGH ],
+    'bano':             [ GPIO.HIGH, GPIO.HIGH, GPIO.LOW  ],
+    'exterior':         [ GPIO.HIGH, GPIO.HIGH, GPIO.HIGH ]
 }
-
 
 @app.route('/estado_luces', methods=['GET'])
 def get_luces_state():
+    led.activar_leds()
     return jsonify(estado_luces)
 
+
 @app.route('/apagar_puertos', methods=['POST'])
-def get_luces_state():
+def apagar_luces():
     # Aqui se apagan los puertos
     puertos_apagados = {
         'puertos_apagados': False,
     }
     return jsonify(puertos_apagados)
 
+
+"""LUCES LEDS HABITACIONES"""
+# Función para establecer el estado de los LEDs según el modo
+def set_lights(mode):
+    if mode in codigo_binario_luces:
+        led.set_leds(codigo_binario_luces[mode])
+    else:
+        print("Modo no reconocido")
 
 @app.route('/control_luz', methods=['POST'])
 def control_luz():
@@ -48,14 +72,31 @@ def control_luz():
     print(data)
     if 'habitacion' in data and 'encendido' in data:
         habitacion = data['habitacion']
+        for cuarto in estado_luces:
+            estado_luces[cuarto] = False
         estado_luces[habitacion] = data['encendido']
-        if data['encendido']:
-            print(f"GPIO.puerto1: {(codigo_binario_luces[habitacion])[0]}")
-            print(f"GPIO.puerto2: {(codigo_binario_luces[habitacion])[1]}")
-            print(f"GPIO.puerto3: {(codigo_binario_luces[habitacion])[2]}")
-
-
+        if data['encendido'] and habitacion != None:
+            set_lights(habitacion)
+            time.sleep(1)
+        else:
+            led.set_leds([GPIO.LOW, GPIO.LOW, GPIO.LOW])
+            time.sleep(1)
     return jsonify(estado_luces)
 
+
+
+# Hilo para monitorear la fotoresistencia
+def monitor_fotoresistencia():
+    led.activar_fotoresistencia()
+    while True:
+        if GPIO.input(led.FOTORESISTENCIA_EXTERIOR) == 1:
+            set_lights('exterior')
+        time.sleep(1)  # Ajusta el tiempo de espera según sea necesario
+
+# Iniciar el hilo de la fotoresistencia
+# threading.Thread(target=monitor_fotoresistencia, daemon=True).start()
+
+
+# INICIANDO EL PROGRAMA
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
