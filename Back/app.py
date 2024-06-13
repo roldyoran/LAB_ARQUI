@@ -18,6 +18,14 @@ GPIO.setup(FOTO_RESISTENCIA, GPIO.IN)
 # import mock_gpio_setup as led
 # GPIO = MagicMock()
 
+# Inicializa la configuración de los pines
+led.setup()
+
+#Colocar modo de los pines
+GPIO.setmode(GPIO.BOARD)
+FOTO_RESISTENCIA = 15
+GPIO.setup(FOTO_RESISTENCIA, GPIO.IN)
+
 
 app = Flask(__name__)
 CORS(app)
@@ -48,7 +56,7 @@ codigo_binario_luces = {
 
 @app.route('/estado_luces', methods=['GET'])
 def get_luces_state():
-    led.activar_leds()
+    # led.activar_leds()
     return jsonify(estado_luces)
 
 

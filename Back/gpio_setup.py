@@ -9,8 +9,9 @@ DECODER3 = 13
 # Inicializar GPIO
 GPIO.setmode(GPIO.BOARD)
 
-def activar_leds():
-    # Seleccionar salida
+# Función para configurar los pines como salidas
+def setup():
+    GPIO.setmode(GPIO.BOARD)  # o GPIO.BOARD, según tu configuración
     GPIO.setup(DECODER1, GPIO.OUT)
     GPIO.setup(DECODER2, GPIO.OUT)
     GPIO.setup(DECODER3, GPIO.OUT)
