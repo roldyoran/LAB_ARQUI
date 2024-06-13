@@ -12,14 +12,12 @@ FOTORESISTENCIA_EXTERIOR = 15
 # Inicializar GPIO
 GPIO.setmode(GPIO.BOARD)
 
-def activar_leds():
-    # Seleccionar salida
+# Función para configurar los pines como salidas
+def setup():
+    GPIO.setmode(GPIO.BOARD)  # o GPIO.BOARD, según tu configuración
     GPIO.setup(DECODER1, GPIO.OUT)
     GPIO.setup(DECODER2, GPIO.OUT)
     GPIO.setup(DECODER3, GPIO.OUT)
-
-def activar_fotoresistencia():
-    GPIO.setup(FOTORESISTENCIA_EXTERIOR, GPIO.IN)
 
 def desactivar_leds():
     # Desactiva los pines de las leds
@@ -35,3 +33,5 @@ def set_leds(state):
     GPIO.output(DECODER1, state[0])
     GPIO.output(DECODER2, state[1])
     GPIO.output(DECODER3, state[2])
+
+    # GPIO.cleanup()

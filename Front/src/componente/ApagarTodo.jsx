@@ -1,5 +1,5 @@
 import React from 'react';
-import './Boton.css'; // Asegúrate de importar el archivo CSS
+import './ApagarTodo.css'; // Asegúrate de importar el archivo CSS
 import { API_URL } from '../config';
 
 const PostButton = () => {

@@ -1,0 +1,27 @@
+.porton-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;  /* Espacio desde la parte superior */
+  left: 10px;  /* Espacio desde la parte izquierda */
+}
+
+.porton-button:hover {
+  transform: scale(1.05);
+}
+
+.porton-button:active {
+  transform: scale(1.00);
+}
+
+.porton-button-on {
+  background-color: red;
+  color: white;
+}
+
+.porton-button-off {
+  background-color: green;
+  color: white;
+}

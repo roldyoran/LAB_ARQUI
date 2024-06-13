@@ -7,24 +7,24 @@ import time
 # MODULOS
 import RPi.GPIO as GPIO
 import gpio_setup as led
+import porton_setup as porton
 
-#Colocar modo de los pines
-GPIO.setmode(GPIO.BOARD)
-FOTO_RESISTENCIA = 15
-GPIO.setup(FOTO_RESISTENCIA, GPIO.IN)
 
-# Importar el módulo simulado en lugar del real
+# MODULO TEST MAGICK
 # from unittest.mock import MagicMock
 # import mock_gpio_setup as led
 # GPIO = MagicMock()
 
-# Inicializa la configuración de los pines
-led.setup()
 
-#Colocar modo de los pines
+
+#Colocar modo de los pines aqui antes de los setups
 GPIO.setmode(GPIO.BOARD)
 FOTO_RESISTENCIA = 15
 GPIO.setup(FOTO_RESISTENCIA, GPIO.IN)
+
+# Inicializa la configuración de los pines
+led.setup()
+# porton.setup()
 
 
 app = Flask(__name__)
@@ -54,6 +54,10 @@ codigo_binario_luces = {
     'exterior':         [ GPIO.HIGH, GPIO.HIGH, GPIO.HIGH ]
 }
 
+porton_setup = {'porton': False}
+
+
+
 @app.route('/estado_luces', methods=['GET'])
 def get_luces_state():
     # led.activar_leds()
@@ -63,8 +67,23 @@ def get_luces_state():
 @app.route('/apagar_pines', methods=['POST'])
 def apagar_pines():
     # Aqui se apagan los puertos
+    porton.desactivar_todo()
     led.apagar_todo()
     return jsonify({"message": "Pines apagados con éxito"})
+
+@app.route('/control_porton', methods=['POST'])
+def control_porton():
+    global porton_setup
+    data = request.get_json()
+    # print(data)
+    if 'encendido' in data:
+        porton_setup['porton'] = data['encendido']
+        if porton_setup['porton']:
+            porton.abrir_porton()
+        else:
+            porton.cerrar_porton()
+    # print(porton)
+    return jsonify(porton_setup)
 
 
 """LUCES LEDS HABITACIONES"""
