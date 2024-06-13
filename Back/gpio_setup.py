@@ -5,7 +5,6 @@ DECODER1 = 11
 DECODER2 = 12
 DECODER3 = 13
 
-FOTORESISTENCIA_EXTERIOR = 15
 
 # Inicializar GPIO
 GPIO.setmode(GPIO.BOARD)
@@ -15,9 +14,6 @@ def activar_leds():
     GPIO.setup(DECODER1, GPIO.OUT)
     GPIO.setup(DECODER2, GPIO.OUT)
     GPIO.setup(DECODER3, GPIO.OUT)
-
-def activar_fotoresistencia():
-    GPIO.setup(FOTORESISTENCIA_EXTERIOR, GPIO.IN)
 
 def desactivar_leds():
     # Desactiva los pines de las leds

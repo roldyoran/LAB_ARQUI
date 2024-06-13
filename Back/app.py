@@ -8,6 +8,10 @@ import time
 import RPi.GPIO as GPIO
 import gpio_setup as led
 
+#Colocar modo de los pines
+GPIO.setmode(GPIO.BOARD)
+FOTO_RESISTENCIA = 15
+GPIO.setup(FOTO_RESISTENCIA, GPIO.IN)
 
 # Importar el módulo simulado en lugar del real
 # from unittest.mock import MagicMock
@@ -85,11 +89,10 @@ def control_luz():
 
 # Hilo para monitorear la fotoresistencia
 def monitor_fotoresistencia():
-    led.activar_fotoresistencia()
     while True:
-        if GPIO.input(led.FOTORESISTENCIA_EXTERIOR) == 1:
+        if GPIO.input(FOTO_RESISTENCIA):
             set_lights('exterior')
-        time.sleep(1)  # Ajusta el tiempo de espera según sea necesario
+        time.sleep(2)  # Ajusta el tiempo de espera según sea necesario
 
 # Iniciar el hilo de la fotoresistencia
 threading.Thread(target=monitor_fotoresistencia, daemon=True).start()
